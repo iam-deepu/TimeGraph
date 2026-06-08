@@ -1,13 +1,12 @@
 import uuid
 from sqlalchemy import Column, String, Boolean, BigInt, ForeignKey, JSON
-from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from .database import Base
 
 class User(Base):
     __tablename__ = "users"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     email = Column(String, unique=True, index=True, nullable=False)
     password_hash = Column(String, nullable=False)
     created_at = Column(BigInt, nullable=False)
@@ -20,7 +19,7 @@ class Schedule(Base):
     __tablename__ = "schedules"
 
     id = Column(String, primary_key=True)  # client-side generated UUID
-    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    user_id = Column(String, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     title = Column(String, nullable=False)
     description = Column(String, default="")
     date = Column(String, nullable=False) # YYYY-MM-DD
@@ -43,7 +42,7 @@ class Task(Base):
     __tablename__ = "tasks"
 
     id = Column(String, primary_key=True) # client-side generated UUID
-    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    user_id = Column(String, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     title = Column(String, nullable=False)
     description = Column(String, default="")
     schedule_id = Column(String, ForeignKey("schedules.id", ondelete="SET NULL"), nullable=True)
