@@ -16,7 +16,7 @@ elif "supabase.co" in DATABASE_URL:
     try:
         pooler_host = os.getenv("SUPABASE_POOLER_HOST", "aws-0-ap-northeast-1.pooler.supabase.com")
         pooler_ip = socket.gethostbyname(pooler_host)
-        connect_args = {"hostaddr": pooler_ip}
+        connect_args = {"hostaddr": pooler_ip, "sslmode": "require"}
         print(f"[Supabase IPv4 Bridge] Using pooler IPv4 {pooler_ip} via hostaddr")
     except Exception as e:
         print(f"[Supabase IPv4 Bridge] Warning: Could not resolve pooler IP: {e}")
