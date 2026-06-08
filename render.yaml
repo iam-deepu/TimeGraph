@@ -1,0 +1,24 @@
+services:
+  # Backend Web Service
+  - type: web
+    name: timegraph-backend
+    runtime: docker
+    dockerfilePath: Dockerfile
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+
+  # Frontend Static Site
+  - type: web
+    name: timegraph-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    plan: free
+    envVars:
+      - key: VITE_API_URL
+        sync: false
