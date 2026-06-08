@@ -376,6 +376,25 @@ export function StoreProvider({ children }) {
     return updatedTask;
   }, [showToast]);
 
+  const dateHasSchedules = useCallback((dateStr) => {
+    const targetDate = Utils.parseDate(dateStr);
+    return schedules.some((schedule) => {
+      const sDate = Utils.parseDate(schedule.date);
+      if (schedule.date === dateStr) return true;
+      if (schedule.recurrence !== 'none' && sDate <= targetDate) {
+        switch (schedule.recurrence) {
+          case 'daily': return true;
+          case 'weekly': return sDate.getDay() === targetDate.getDay();
+          case 'monthly': return sDate.getDate() === targetDate.getDate();
+          case 'custom':
+            return schedule.recurrenceDays && schedule.recurrenceDays.includes(targetDate.getDay());
+          default: return false;
+        }
+      }
+      return false;
+    });
+  }, [schedules]);
+
   // Sync action: Calls the backend API and reconciles differences
   const sync = useCallback(async () => {
     if (!isOnline || !user) return;
@@ -538,6 +557,7 @@ export function StoreProvider({ children }) {
         deleteTask,
         rescheduleTask,
         completeTask,
+        dateHasSchedules,
         sync,
       }}
     >

@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, String, Boolean, BigInt, ForeignKey, JSON
+from sqlalchemy import Column, String, Boolean, BigInteger, ForeignKey, JSON
 from sqlalchemy.orm import relationship
 from .database import Base
 
@@ -9,7 +9,7 @@ class User(Base):
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     email = Column(String, unique=True, index=True, nullable=False)
     password_hash = Column(String, nullable=False)
-    created_at = Column(BigInt, nullable=False)
+    created_at = Column(BigInteger, nullable=False)
 
     schedules = relationship("Schedule", back_populates="user", cascade="all, delete-orphan")
     tasks = relationship("Task", back_populates="user", cascade="all, delete-orphan")
@@ -31,8 +31,8 @@ class Schedule(Base):
     reminders = Column(JSON, default=list) # e.g. [0, 5, 30]
     timezone = Column(String, nullable=True)
     is_deleted = Column(Boolean, default=False, nullable=False)
-    created_at = Column(BigInt, nullable=False)
-    updated_at = Column(BigInt, nullable=False)
+    created_at = Column(BigInteger, nullable=False)
+    updated_at = Column(BigInteger, nullable=False)
 
     user = relationship("User", back_populates="schedules")
     tasks = relationship("Task", back_populates="schedule", cascade="all, delete-orphan")
@@ -52,8 +52,8 @@ class Task(Base):
     priority = Column(String, default="normal") # low, normal, high
     original_due_date = Column(String, nullable=True)
     is_deleted = Column(Boolean, default=False, nullable=False)
-    created_at = Column(BigInt, nullable=False)
-    updated_at = Column(BigInt, nullable=False)
+    created_at = Column(BigInteger, nullable=False)
+    updated_at = Column(BigInteger, nullable=False)
 
     user = relationship("User", back_populates="tasks")
     schedule = relationship("Schedule", back_populates="tasks")
