@@ -1,0 +1,240 @@
+/* ============================================
+   TimeGraph — Context Menu
+   ============================================ */
+.context-menu {
+  position: fixed;
+  z-index: var(--z-modal);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  min-width: 170px;
+  padding: var(--space-xs) 0;
+  animation: bounceIn var(--duration-normal) var(--ease-spring);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.context-menu.hidden {
+  display: none;
+}
+
+.context-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: 10px 16px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: background var(--duration-fast) var(--ease-out);
+  text-align: left;
+}
+
+.context-menu-item:hover {
+  background: var(--bg-hover);
+}
+
+.context-menu-item svg {
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.context-menu-danger {
+  color: var(--danger);
+}
+.context-menu-danger:hover {
+  background: rgba(255, 82, 82, 0.1);
+}
+
+/* Backdrop for closing on outside tap */
+.context-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-modal) - 1);
+}
+
+/* Day Toggles for custom recurrence */
+.day-toggles {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.day-toggle {
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  transition: all var(--duration-fast) var(--ease-out);
+  cursor: pointer;
+}
+.day-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.day-toggle.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--text-inverse);
+}
+
+/* Priority chips */
+.priority-chips {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.priority-chip {
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  transition: all var(--duration-fast) var(--ease-out);
+  cursor: pointer;
+}
+.priority-chip:hover {
+  border-color: var(--accent);
+}
+.priority-chip.active[data-priority="low"] {
+  background: rgba(68, 138, 255, 0.15);
+  border-color: #448aff;
+  color: #448aff;
+}
+.priority-chip.active[data-priority="normal"] {
+  background: var(--accent-subtle);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.priority-chip.active[data-priority="high"] {
+  background: rgba(255, 82, 82, 0.15);
+  border-color: #ff5252;
+  color: #ff5252;
+}
+
+/* Custom reminder row */
+.reminder-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.custom-reminder-row {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+}
+.custom-reminder-input {
+  width: 80px;
+  padding: 6px 10px;
+  font-size: var(--text-sm);
+  text-align: center;
+}
+.btn-sm {
+  padding: 6px 12px;
+  font-size: var(--text-xs);
+}
+
+/* Task count badge on schedule cards */
+.task-count-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  background: rgba(255,255,255,0.1);
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* Inline tasks below a schedule card */
+.inline-tasks {
+  position: absolute;
+  top: 100%;
+  left: -1px;
+  right: -1px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-light);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  padding: 8px 10px;
+  z-index: 20;
+  animation: fadeIn var(--duration-fast) var(--ease-out);
+  max-height: 160px;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.timeline-event.expanded {
+  z-index: 10;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.inline-task-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 6px 0;
+  font-size: var(--text-xs);
+  border-bottom: 1px solid var(--border-subtle);
+  cursor: pointer;
+}
+.inline-task-item:last-child { border-bottom: none; }
+
+.inline-task-check {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--text-muted);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.inline-task-check.done {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.inline-task-title {
+  flex: 1;
+  color: var(--text-secondary);
+}
+.inline-task-title.done {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.priority-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.priority-dot.high { background: #ff5252; }
+.priority-dot.normal { background: var(--accent); }
+.priority-dot.low { background: #448aff; }
+
+/* Status badges in task list */
+.status-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.status-badge.upcoming { background: rgba(0,230,118,0.15); color: var(--accent); }
+.status-badge.completed { background: rgba(0,230,118,0.15); color: var(--accent); }
+.status-badge.rescheduled { background: rgba(68,138,255,0.15); color: #448aff; }
+.status-badge.pending { background: rgba(255,171,64,0.15); color: #ffab40; }
