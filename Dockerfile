@@ -11,5 +11,5 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 # Copy application source code from backend folder
 COPY ./backend/app /code/app
 
-# Hugging Face Spaces routes traffic to port 7860 by default
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "7860"]
+# Render injects PORT env var; default to 10000
+CMD uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-10000}

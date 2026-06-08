@@ -4,7 +4,6 @@ services:
     name: timegraph-backend
     runtime: docker
     dockerfilePath: Dockerfile
-    plan: free
     envVars:
       - key: DATABASE_URL
         sync: false
