@@ -1,0 +1,17 @@
+# Python ignores
+backend/venv/
+backend/.env
+backend/__pycache__/
+backend/**/*.pyc
+backend/*.db
+
+# Node/Vite ignores
+frontend/node_modules/
+frontend/dist/
+frontend/.env*
+frontend/.eslintcache
+frontend/npm-debug.log*
+
+# System files
+.DS_Store
+Thumbs.db
